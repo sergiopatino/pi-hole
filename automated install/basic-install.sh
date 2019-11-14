@@ -2216,9 +2216,8 @@ FTLinstall() {
         ftlBranch="master"
     fi
 
-    local binary
-    get_binary_name
-    binary=$(</etc/pihole/ftlbinary)
+    local binary    
+    binary=$(get_binary_name)
 
     # Determine which version of FTL to download
     if [[ "${ftlBranch}" == "master" ]];then
@@ -2364,8 +2363,7 @@ get_binary_name() {
         binary="pihole-FTL-linux-x86_32"
     fi
 
-    echo ${binary} > /etc/pihole/ftlbinary
-    chmod 644 /etc/pihole/ftlbinary
+    echo "${binary}"
 }
 
 FTLcheckUpdate() {
@@ -2384,9 +2382,8 @@ FTLcheckUpdate() {
         ftlBranch="master"
     fi
 
-    local binary
-    get_binary_name
-    binary=$(</etc/pihole/ftlbinary)
+    local binary    
+    binary=$(get_binary_name)
 
     local remoteSha1
     local localSha1

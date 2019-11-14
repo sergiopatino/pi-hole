@@ -46,9 +46,8 @@ checkout() {
     local corebranches
     local webbranches
 
-    local binary
-    get_binary_name
-    binary=$(</etc/pihole/ftlbinary)
+    local binary    
+    binary=$(get_binary_name)
 
     # Avoid globbing
     set -f
