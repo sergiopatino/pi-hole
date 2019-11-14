@@ -2367,8 +2367,8 @@ get_binary_name() {
         binary="pihole-FTL-linux-x86_32"
     fi
 
-    echo ${binary} > etc/pihole/ftlbinary
-    chmod 644 /etc/ftlbinary
+    echo ${binary} > /etc/pihole/ftlbinary
+    chmod 644 /etc/pihole/ftlbinary
 }
 
 FTLcheckUpdate() {
