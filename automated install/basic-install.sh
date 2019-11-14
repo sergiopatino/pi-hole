@@ -138,9 +138,6 @@ else
     OVER="\\r\\033[K"
 fi
 
-# Define global binary variable
-binary="tbd"
-
 # A simple function that just echoes out our logo in ASCII format
 # This lets users know that it is a Pi-hole, LLC product
 show_ascii_berry() {
