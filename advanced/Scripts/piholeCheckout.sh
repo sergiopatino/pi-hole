@@ -46,6 +46,10 @@ checkout() {
     local corebranches
     local webbranches
 
+    local binary
+    get_binary_name
+    binary=$(</etc/pihole/ftlbinary)
+
     # Avoid globbing
     set -f
 
@@ -86,7 +90,6 @@ checkout() {
         fi
         #echo -e "  ${TICK} Pi-hole Core"
 
-        get_binary_name
         local path
         path="development/${binary}"
         echo "development" > /etc/pihole/ftlbranch
@@ -101,7 +104,6 @@ checkout() {
             fetch_checkout_pull_branch "${webInterfaceDir}" "master" || { echo "  ${CROSS} Unable to pull Web master branch"; exit 1; }
         fi
         #echo -e "  ${TICK} Web Interface"
-        get_binary_name
         local path
         path="master/${binary}"
         echo "master" > /etc/pihole/ftlbranch
@@ -161,7 +163,6 @@ checkout() {
         fi
         checkout_pull_branch "${webInterfaceDir}" "${2}"
     elif [[ "${1}" == "ftl" ]] ; then
-        get_binary_name
         local path
         path="${2}/${binary}"
 

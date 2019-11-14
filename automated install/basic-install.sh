@@ -2219,6 +2219,10 @@ FTLinstall() {
         ftlBranch="master"
     fi
 
+    local binary
+    get_binary_name
+    binary=$(</etc/pihole/ftlbinary)
+
     # Determine which version of FTL to download
     if [[ "${ftlBranch}" == "master" ]];then
         url="https://github.com/pi-hole/FTL/releases/download/${latesttag%$'\r'}"
@@ -2297,6 +2301,8 @@ get_binary_name() {
     local machine
     machine=$(uname -m)
 
+    local binary
+
     local str="Detecting architecture"
     printf "  %b %s..." "${INFO}" "${str}"
     # If the machine is arm or aarch
@@ -2360,11 +2366,12 @@ get_binary_name() {
         fi
         binary="pihole-FTL-linux-x86_32"
     fi
+
+    echo ${binary} > /etc/pihole/ftlbinary
+    chmod 644 /etc/pihole/ftlbinary
 }
 
 FTLcheckUpdate() {
-    get_binary_name
-
     #In the next section we check to see if FTL is already installed (in case of pihole -r).
     #If the installed version matches the latest version, then check the installed sha1sum of the binary vs the remote sha1sum. If they do not match, then download
     printf "  %b Checking for existing FTL binary...\\n" "${INFO}"
@@ -2379,6 +2386,10 @@ FTLcheckUpdate() {
     else
         ftlBranch="master"
     fi
+
+    local binary
+    get_binary_name
+    binary=$(</etc/pihole/ftlbinary)
 
     local remoteSha1
     local localSha1
