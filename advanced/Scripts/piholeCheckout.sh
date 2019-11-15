@@ -48,7 +48,7 @@ checkout() {
 
     local binary
     get_binary_name
-    binary=$(</etc/pihole/ftlbinary)
+    binary=$(<./ftlbinary)
 
     # Avoid globbing
     set -f
