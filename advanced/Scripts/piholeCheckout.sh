@@ -47,8 +47,7 @@ checkout() {
     local webbranches
 
     local binary
-    get_binary_name
-    binary=$(<./ftlbinary)
+    binary="$(get_binary_name)"
 
     # Avoid globbing
     set -f

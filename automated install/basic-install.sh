@@ -2219,15 +2219,8 @@ FTLinstall() {
         ftlBranch="master"
     fi    
 
-    local binary    
-    if [[ ${1} ]] ; then
-        # FTLinstall has been called from piholeCheckout.sh, the machine arch is determined there to ensure the download exists, first.
-        binary="${1}"
-    else
-        # The main install script is calling FTLinstall, so we need to determine the correct machine arch
-        get_binary_name
-        binary=$(<./ftlbinary)
-    fi
+    local binary
+    binary="${1}"
 
     # Determine which version of FTL to download
     if [[ "${ftlBranch}" == "master" ]];then
@@ -2373,7 +2366,7 @@ get_binary_name() {
         l_binary="pihole-FTL-linux-x86_32"
     fi
 
-    echo ${l_binary} > ./ftlbinary
+    echo ${l_binary}
 }
 
 FTLcheckUpdate() {
@@ -2393,8 +2386,7 @@ FTLcheckUpdate() {
     fi
 
     local binary
-    get_binary_name
-    binary=$(<./ftlbinary)
+    binary="${1}"
 
     local remoteSha1
     local localSha1
@@ -2471,11 +2463,11 @@ FTLcheckUpdate() {
 }
 
 # Detect suitable FTL binary platform
-FTLdetect() {
+FTLdetect() {    
     printf "\\n  %b FTL Checks...\\n\\n" "${INFO}"
 
-    if FTLcheckUpdate ; then
-        FTLinstall || return 1
+    if FTLcheckUpdate "${1}"; then
+        FTLinstall "${1}" || return 1
     fi
 }
 
@@ -2639,7 +2631,7 @@ main() {
     # Create the pihole user
     create_pihole_user
     # Check if FTL is installed - do this early on as FTL is a hard dependency for Pi-hole
-    if ! FTLdetect; then
+    if ! FTLdetect "$(get_binary_name)"; then
         printf "  %b FTL Engine not installed\\n" "${CROSS}"
         exit 1
     fi
