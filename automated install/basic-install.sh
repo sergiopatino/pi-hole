@@ -2218,7 +2218,7 @@ FTLinstall() {
 
     local binary
     get_binary_name
-    binary=${<./ftlbinary)}
+    binary=$(<./ftlbinary)
 
     # Determine which version of FTL to download
     if [[ "${ftlBranch}" == "master" ]];then
@@ -2385,7 +2385,7 @@ FTLcheckUpdate() {
 
     local binary
     get_binary_name
-    binary=${(<./ftlbinary)}
+    binary=$(<./ftlbinary)
 
     local remoteSha1
     local localSha1
