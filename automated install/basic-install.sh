@@ -2215,10 +2215,15 @@ FTLinstall() {
     else
         ftlBranch="master"
     fi
+    
 
     local binary
-    get_binary_name
-    binary=$(<./ftlbinary)
+    if [[ ${1} ]] ; then
+        binary="${1}"
+    else
+        get_binary_name
+        binary=$(<./ftlbinary)
+    fi
 
     # Determine which version of FTL to download
     if [[ "${ftlBranch}" == "master" ]];then
