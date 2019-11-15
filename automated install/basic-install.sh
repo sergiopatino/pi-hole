@@ -2186,7 +2186,10 @@ clone_or_update_repos() {
 }
 
 # Download FTL binary to random temp directory and install FTL binary
+# Disable directive for SC2120 a value _can_ be passed to this function, but it is passed from an external script that sources this one
+# shellcheck disable=SC2120
 FTLinstall() {
+    
     # Local, named variables
     local latesttag
     local str="Downloading and Installing FTL"
@@ -2214,13 +2217,14 @@ FTLinstall() {
         ftlBranch=$(</etc/pihole/ftlbranch)
     else
         ftlBranch="master"
-    fi
-    
+    fi    
 
-    local binary
+    local binary    
     if [[ ${1} ]] ; then
+        # FTLinstall has been called from piholeCheckout.sh, the machine arch is determined there to ensure the download exists, first.
         binary="${1}"
     else
+        # The main install script is calling FTLinstall, so we need to determine the correct machine arch
         get_binary_name
         binary=$(<./ftlbinary)
     fi
